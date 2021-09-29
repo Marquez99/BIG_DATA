@@ -60,3 +60,16 @@ Dataf.filter($"Close"<600).count()
 Dataf.select(corr("High","Volume")).show()
 
 
+//d. ¿Cuál es el máximo de la columna “High” por año? 
+val YDataf = Dataf.withColumn("Year",Y(Dataf("Date")))
+
+val Ymaxs = YDataf.select($"Year",$"High").groupBy("Year").max()
+
+Ymaxs.select($"Year",$"max(High)").show()
+
+
+//e. ¿Cuál es el promedio de columna “Close” para cada mes del calendario? 
+
+val mDataf = Dataf.withColumn("Month",m(Dataf("Date")))
+val mavgs = mDataf.select($"MOnt",$"Close").groupBy("Mont").mean()
+mavgs.select($"Month",$"avg(Close)").show()
