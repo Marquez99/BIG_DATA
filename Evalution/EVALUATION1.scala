@@ -29,3 +29,34 @@ Dataf.describe().show()
 
 val Dataf2 = Dataf.withColumn("HV Ratio",Dataf("High")/Dataf("Volume"))
 
+//8. ¿Qué día tuvo el pico mas alto en la columna “Open”? 
+
+Dataf.orderBy($"Open".desc).show(1)
+
+//9. ¿Cuál es el significado de la columna Cerrar “Close” en el contexto de información financiera,  
+//explíquelo no hay que codificar nada? 
+
+//Esta columna indica el precio en el que se concluyeron las ventas de acciones el día segun sea el caso.
+
+
+//10. ¿Cuál es el máximo y mínimo de la columna “Volumen”?
+
+//MAXIMO
+Dataf.select(max("Volume")).show()
+
+//MINIMO
+Dataf.select(min("Volume")).show()
+
+
+//11. Con Sintaxis Scala/Spark $ conteste los siguiente: 
+
+//a. ¿Cuántos días fue la columna “Close” inferior a $600? 
+Dataf.filter($"Close"<600).count()
+
+//b. ¿Qué porcentaje del tiempo fue la columna “High” mayor que $500? 
+(Dataf.filter($"High">500).count()*1.0/Dataf.count())*100
+
+//c. ¿Cuál es la correlación de Pearson entre la columna “High” y la columna “Volumen”? 
+Dataf.select(corr("High","Volume")).show()
+
+
