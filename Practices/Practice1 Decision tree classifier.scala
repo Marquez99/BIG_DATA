@@ -1,3 +1,9 @@
+// PRACTICA 1 DECISION TREE CLASSIFIER 
+
+//MARQUEZ ENRIQUEZ KEVIN EDWIN 17212923
+//LOPEZ MEDRANO JULIO ANTONIO 
+
+
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.DecisionTreeClassificationModel
 import org.apache.spark.ml.classification.DecisionTreeClassifier
