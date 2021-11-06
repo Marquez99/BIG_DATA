@@ -52,3 +52,7 @@ val model = pipeline.fit(trainingData)
 
 // Make predictions.
 val predictions = model.transform(testData)
+
+
+// Select example rows to display.
+predictions.select("predictedLabel", "label", "features").show(5)
