@@ -30,3 +30,25 @@ val featureIndexer = new VectorIndexer()
 // Split the data into training and test sets (30% held out for testing).
 val Array(trainingData, testData) = data.randomSplit(Array(0.7, 0.3))
 
+// Train a GBT model.
+val gbt = new GBTClassifier()
+  .setLabelCol("indexedLabel")
+  .setFeaturesCol("indexedFeatures")
+  .setMaxIter(10)
+  .setFeatureSubsetStrategy("auto")
+
+// Convert indexed labels back to original labels.
+val labelConverter = new IndexToString()
+  .setInputCol("prediction")
+  .setOutputCol("predictedLabel")
+  .setLabels(labelIndexer.labels)
+
+// Chain indexers and GBT in a Pipeline.
+val pipeline = new Pipeline()
+  .setStages(Array(labelIndexer, featureIndexer, gbt, labelConverter))
+
+// Train model. This also runs the indexers.
+val model = pipeline.fit(trainingData)
+
+// Make predictions.
+val predictions = model.transform(testData)
