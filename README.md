@@ -8,11 +8,15 @@ In the branch named _"Unit 2"_ we have the following practices:
 
 [Practice_2](https://github.com/Marquez99/BIG_DATA/blob/Unit_2/Practices/Practice_2_u2.scala)
 
-[Practice_3]()
+[Practice_3](https://github.com/Marquez99/BIG_DATA/blob/Unit_2/Practices/Practice3%20Random%20forest%20classifier.scala)
 
-[Practice_4]()
+[Practice_4](https://github.com/Marquez99/BIG_DATA/blob/Unit_2/Practices/Practice%204%20Gradient-boosted%20tree%20classifier.scala)
 
-[Evaluation_1]()
+[Practice_5](https://github.com/Marquez99/BIG_DATA/blob/Unit_2/Practices/Expo_Practice5_u2.scala)
+
+[Practice_6](https://github.com/Marquez99/BIG_DATA/blob/Unit_2/Practices/Practice_6_u2.scala)
+
+[Evaluation_2]()
 
 # Practice 1
 
@@ -165,13 +169,14 @@ trainingSummary.meanSquaredError
 ```
 # Practice 3
 
+Documentar y ejecutar el ejemplo de la documentación de  spark del Random forest classifier, en su branch correspondiente.
 
 ## Code
 ```r
 // PRACTICA 3 Random forest classifier
 
 //MARQUEZ ENRIQUEZ KEVIN EDWIN 17212923
-//LOPEZ MEDRANO JULIO ANTONIO 
+//LOPEZ MEDRANO JULIO ANTONIO 17211533
 
 
 
@@ -240,7 +245,7 @@ println(s"Learned classification forest model:\n ${rfModel.toDebugString}")
 
 # Practice 4
 
-
+Documentar y ejecutar el ejemplo de la documentación de  spark del Decision tree classifier, en su branch correspondiente.
 
 ## Code
 
@@ -248,7 +253,7 @@ println(s"Learned classification forest model:\n ${rfModel.toDebugString}")
 // PRACTICA 4 Gradient-boosted tree classifier
 
 //MARQUEZ ENRIQUEZ KEVIN EDWIN 17212923
-//LOPEZ MEDRANO JULIO ANTONIO 
+//LOPEZ MEDRANO JULIO ANTONIO 17211533
 
 
 
@@ -316,8 +321,92 @@ val gbtModel = model.stages(2).asInstanceOf[GBTClassificationModel]
 println(s"Learned classification GBT model:\n ${gbtModel.toDebugString}")
 
 ```
+# Practice 5
 
-# Evaluation 1
+Documentar y ejecutar el ejemplo de la documentación de  spark del Multilayer Perceptron classifier, en su branch correspondiente.
+
+## Code
+
+```r
+// Spark Session (Basic session lines)
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder().getOrCreate() 
+
+// Import the Multilayer Perceptron Classifier and Multiclass Classification Evaluator library
+import org.apache.spark.ml.classification.MultilayerPerceptronClassifier
+import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
+
+// Load the data stored in LIBSVM format as a DataFrame.
+val data = spark.read.format("libsvm").load("data/mllib/sample_multiclass_classification_data.txt")
+
+// Split the data into train and test
+val splits = data.randomSplit(Array(0.7, 0.3), seed = 1234L)
+val train = splits(0)
+val test = splits(1)
+
+// specify layers for the neural network:
+// input layer of size 4 (features), two intermediate of size 5 and 4
+// and output of size 3 (classes)
+val layers = Array[Int](4, 5, 4, 3)
+
+// create the trainer and set its parameters
+val trainer = new MultilayerPerceptronClassifier()
+  .setLayers(layers)
+  .setBlockSize(128)
+  .setSeed(1234L)
+  .setMaxIter(100)
+
+// train the model
+val model = trainer.fit(train)
+
+// compute accuracy on the test set
+val result = model.transform(test)
+val predictionAndLabels = result.select("prediction", "label")
+val evaluator = new MulticlassClassificationEvaluator().setMetricName("accuracy")
+
+// show the result
+println(s"Test set accuracy = ${evaluator.evaluate(predictionAndLabels)}")
+```
+
+# Practice 6
+
+Documentar y ejecutar el ejemplo de la documentación de  spark del Linear Support Vector Machine, en su branch correspondiente.
+
+## Code
+
+```r
+// Basic Spark Session
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder().getOrCreate() 
+
+// Import LinearSVC Library
+import org.apache.spark.ml.classification.LinearSVC
+
+// Load training data
+val training = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
+
+val lsvc = new LinearSVC()
+  .setMaxIter(10)
+  .setRegParam(0.1)
+
+// Fit the model
+val lsvcModel = lsvc.fit(training)
+
+// Print the coefficients and intercept for linear svc
+println(s"Coefficients: ${lsvcModel.coefficients} Intercept: ${lsvcModel.intercept}")
+```
+
+# Practice 7
+
+Documentar y ejecutar el ejemplo de la documentación de  spark de Naive Bayes, en su branch correspondiente
+
+## Code
+
+```r
+
+```
+
+# Evaluation 2
 
 
 
