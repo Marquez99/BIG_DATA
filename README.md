@@ -20,8 +20,7 @@ In the branch named _"Unit 2"_ we have the following practices:
 
 # Practice 1
 
-Documentar y ejecutar el ejemplo de la documentación de spark del Decision tree classifier, en su branch correspondiente.
-
+Document and run the spark documentation example of the Decision tree classifier, in its corresponding branch.
 ## Code
 ```r
 import org.apache.spark.ml.Pipeline
@@ -88,8 +87,7 @@ println(s"Learned classification tree model:\n ${treeModel.toDebugString}")
 
 # Practice 2
 
-Seguir las intrucciones del siguiente repositorio: https://github.com/jcromerohdz/BigData/blob/master/Spark_Regression/AssigmentLinearRegression.scala
-
+Follow the instructions in the following repository: https://github.com/jcromerohdz/BigData/blob/master/Spark_Regression/AssigmentLinearRegression.scala
 ## Code
 
 ```r
@@ -169,8 +167,7 @@ trainingSummary.meanSquaredError
 ```
 # Practice 3
 
-Documentar y ejecutar el ejemplo de la documentación de  spark del Random forest classifier, en su branch correspondiente.
-
+Document and run the spark documentation example of the Random forest classifier, in its corresponding branch.
 ## Code
 ```r
 // PRACTICA 3 Random forest classifier
@@ -245,8 +242,7 @@ println(s"Learned classification forest model:\n ${rfModel.toDebugString}")
 
 # Practice 4
 
-Documentar y ejecutar el ejemplo de la documentación de  spark del Decision tree classifier, en su branch correspondiente.
-
+Document and run the spark documentation example of the Decision tree classifier, in its corresponding branch.
 ## Code
 
 ```r
@@ -323,8 +319,7 @@ println(s"Learned classification GBT model:\n ${gbtModel.toDebugString}")
 ```
 # Practice 5
 
-Documentar y ejecutar el ejemplo de la documentación de  spark del Multilayer Perceptron classifier, en su branch correspondiente.
-
+Document and run the example from the spark documentation of the Multilayer Perceptron classifier, in its corresponding branch.
 ## Code
 
 ```r
@@ -370,8 +365,7 @@ println(s"Test set accuracy = ${evaluator.evaluate(predictionAndLabels)}")
 
 # Practice 6
 
-Documentar y ejecutar el ejemplo de la documentación de  spark del Linear Support Vector Machine, en su branch correspondiente.
-
+Document and run the spark documentation example from the Linear Support Vector Machine, in its corresponding branch.
 ## Code
 
 ```r
@@ -398,11 +392,35 @@ println(s"Coefficients: ${lsvcModel.coefficients} Intercept: ${lsvcModel.interce
 
 # Practice 7
 
-Documentar y ejecutar el ejemplo de la documentación de  spark de Naive Bayes, en su branch correspondiente
-
+Document and run the Naive Bayes spark documentation example, in its corresponding branch
 ## Code
 
 ```r
+// PRACTICA 7 NAIVE BAYES
+ 
+//MARQUEZ ENRIQUEZ KEVIN EDWIN 17212923
+//LOPEZ MEDRANO JULIO ANTONIO
+import org.apache.spark.ml.classification.NaiveBayes
+import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
+ 
+// Load the data stored in LIBSVM format as a DataFrame.
+val data = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
+ 
+// Split the data into training and test sets (30% held out for testing)
+val Array(trainingData, testData) = data.randomSplit(Array(0.7, 0.3), seed = 1234L)
+// Train a NaiveBayes model.
+val model = new NaiveBayes()
+  .fit(trainingData)
+// Select example rows to display.
+val predictions = model.transform(testData)
+predictions.show()
+// Select (prediction, true label) and compute test error
+val evaluator = new MulticlassClassificationEvaluator()
+  .setLabelCol("label")
+  .setPredictionCol("prediction")
+  .setMetricName("accuracy")
+val accuracy = evaluator.evaluate(predictions)
+println(s"Test set accuracy = $accuracy")
 
 ```
 
