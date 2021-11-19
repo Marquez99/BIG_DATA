@@ -39,3 +39,25 @@ val assembler = new VectorAssembler().setInputCols(Array("sepal_length","sepal_w
 val features = assembler.transform(indexed)
 features.show(151) //Note: This will show all data so you can see the second transformation
 
+
+//7. Construct the classification model and explain it's architecture
+val splits = features.randomSplit(Array(0.7, 0.3), seed = 1234L) //Split the features column data randomly in 70% and 30%
+val train = splits(0) // For training we use 70% of the data
+val test = splits(1) // For testing we use 30% of the data
+
+val layers = Array[Int](4, 5, 4, 3) // We create the layers of the neural network, where vector position 1 and 2 are the hidden layers
+val trainer = new MultilayerPerceptronClassifier() // We create the training model
+  .setLayers(layers) // We set the before created layers to define the model
+  .setBlockSize(128) // We setup the block size
+  .setSeed(1234L) // Random Seed so we don't get the secuential data or the test would not make sense
+  .setMaxIter(100) // Max number of iterations for the model
+
+val model = trainer.fit(train) // We now train the model with the data provided in the split named train
+val result = model.transform(test) // We now make a test of the model to know it's accuracy
+val predictionAndLabels = result.select("prediction", "label") // We select the columns of which we want to see
+val evaluator = new MulticlassClassificationEvaluator() // Now we create the evaluator which will tell us the accuracy of the model
+  .setMetricName("accuracy") // This will tell us the accuracy of the model
+
+//8. Print the results of the Model
+println(s"\n\nTest set accuracy = ${evaluator.evaluate(predictionAndLabels)}") // We now print the ammount of accuracy the model has
+
