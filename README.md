@@ -18,7 +18,7 @@ In the branch named _"Unit 2"_ we have the following practices:
 
 [Practice_7](https://github.com/Marquez99/BIG_DATA/blob/Unit_2/Practices/Practice%237%20NAIVE%20BAYES.scala)
 
-[Evaluation_2]()
+[Evaluation_2](https://github.com/Marquez99/BIG_DATA/tree/Unit_2/Evaluation)
 
 
 ## Index Of Unit 2 Explanations
