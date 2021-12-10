@@ -8,6 +8,11 @@ In the branch named _"Unit 3"_ we have the following practices:
 
 [Evaluation_3](https://github.com/Marquez99/BIG_DATA/blob/Unit_3/Evaluation/Evaluation_3.scala)
 
+## Explanations
+
+[Practice_1]()
+
+[Evaluation_3](https://github.com/Marquez99/BIG_DATA/blob/Unit_3/Evaluation/Evaluation%201%20Unit%203%20Explanation.md)
 
 # **Collaborators:**
 
