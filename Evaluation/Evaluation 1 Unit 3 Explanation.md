@@ -41,3 +41,19 @@ val assembler = new VectorAssembler().setInputCols(Array("Fresh", "Milk", "Groce
 ```r
 val features = assembler.transform(feature_data)
 ```
+## 10.- Create the kmean model with k = 3
+```r
+val kmeans = new KMeans().setK(3).setSeed(1L)
+val model = kmeans.fit(features)
+```
+## 11.- Evaluate the groups using Within Set Sum of Squared Errors WSSSE and print the centroids.
+```r
+val WSSE = model.computeCost(features)
+println(s"\n\nWithin set sum of Squared Errors = $WSSE\n\n")
+
+println("Cluster Centers: ")
+model.clusterCenters.foreach(println)
+```
+![imagen](https://github.com/Marquez99/BIG_DATA/blob/Unit_3/Resources/Centroids.png)
+
+### 
