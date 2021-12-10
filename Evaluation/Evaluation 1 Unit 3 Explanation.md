@@ -1,6 +1,20 @@
 
 # Evaluation 3 - Unit 3
 
+
+**This evaluation is intended to solve and analyze the instructions
+previously established in the evaluation of unit 3, where the steps to be able to filter the test set of the plot "Wholesale customers data.csv ”in which different factors are disclosed, such as the products sold by wholesale, as well as different factors to take into account.**
+
+> For this evaluative practice, the data provided by the Professor Jose
+> Christian Romero, with the Scala programming language, using only the
+> documentation of the Spark library and we must Load in a dataframe
+> Wholesale customers data.csv
+
+ found in [jcromerohdz Repositorie](https://github.com/jcromerohdz/BigData/blob/master/Spark_clustering/Wholesale%20customers%20data.csv)
+
+***Each of the steps taken by the Engineer are reflected below.
+Medrano Julio and Marquez Kevin, where the comments are highlighted within the code explaining each line of code.*** 
+
 ## 1.- Import a simple spark session
 
 ```r
