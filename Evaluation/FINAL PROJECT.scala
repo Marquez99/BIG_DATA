@@ -63,6 +63,57 @@ val lnsvc_accuracy = evaluator.evaluate(lnsvc_prediction)
 print("Accuracy of SVM IS = " + (lnsvc_accuracy))
 
 
+/* PART 2 OF PROJECT*/
+
+/* DECISION TREE CODE*/
+
+/*Import OF LIBRARIES*/
 
 
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.types.DateType
+import org.apache.spark.ml.feature.VectorIndexer
+import org.apache.spark.ml.feature.VectorAssembler
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.feature.StringIndexer
+import org.apache.spark.ml.classification.DecisionTreeClassifier
+import org.apache.spark.ml.feature.IndexToString
+import org.apache.spark.ml.evaluation.MulticlassClassificationEvaluator
+import org.apache.spark.ml.classification.DecisionTreeClassificationModel
+import org.apache.log4j._
 
+/*DE;ETE WRNING*/
+Logger.getLogger("org").setLevel(Level.ERROR)
+
+/*CREATE SPARK SESSION*/
+val spark = SparkSession.builder().getOrCreate()
+val df = spark.read.option("header","true").option("inferSchema","true").option("delimiter",";").format("csv").load("bank.csv")
+
+/*DATA TYPES.*/
+// df.printSchema()
+// df.show(1)
+
+/*CHANGE THE BINARY DATA*/
+val change1 = df.withColumn("y",when(col("y").equalTo("yes"),1).otherwise(col("y")))
+val change2 = change1.withColumn("y",when(col("y").equalTo("no"),2).otherwise(col("y")))
+val newcolumn = change2.withColumn("y",'y.cast("Int"))
+
+/*NEW CLOUMN*/
+// newcolumn.show(1)
+
+/*GENERATE FEATURES LABELS*/
+val assembler = new VectorAssembler().setInputCols(Array("balance","day","duration","pdays","previous")).setOutputCol("features")
+val fea = assembler.transform(newcolumn)
+/*Mostramos la nueva columna*/
+// fea.show(1)
+
+/*CHANNGE THE COLUMNS*/
+val cambio = fea.withColumnRenamed("y", "label")
+val feat = cambio.select("label","features")
+// feat.show(1)
+
+/*DecisionTree*/
+val labelIndexer = new StringIndexer().setInputCol("label").setOutputCol("indexedLabel").fit(feat)
+
+/*FEATURES */
+val featureIndexer = new VectorIndexer().setInputCol("features").setOutputCol("indexedFeatures").setMaxCategories(4) 
