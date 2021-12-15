@@ -279,6 +279,7 @@ val cambio = newDF.withColumnRenamed("y", "label")
 val finalDF = cambio.select("label","features")
 // finalDF.show(1)
 
+
 // We change the main label with categorical data from string to an Index
 val labelIndexer = new StringIndexer().setInputCol("label").setOutputCol("indexedLabel").fit(finalDF)
 
