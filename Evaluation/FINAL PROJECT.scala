@@ -117,3 +117,18 @@ val labelIndexer = new StringIndexer().setInputCol("label").setOutputCol("indexe
 
 /*FEATURES */
 val featureIndexer = new VectorIndexer().setInputCol("features").setOutputCol("indexedFeatures").setMaxCategories(4) 
+
+/*DIVISION OF THE DATA 70% AND 30%*/
+val Array(trainingData, testData) = feat.randomSplit(Array(0.7, 0.3))
+
+/*CREATE OF AN OBJECT OF PREDECITION TREE*/
+val dt = new DecisionTreeClassifier().setLabelCol("indexedLabel").setFeaturesCol("indexedFeatures")
+
+/*PREDECITON VRANCH*/
+val labelConverter = new IndexToString().setInputCol("prediction").setOutputCol("predictedLabel").setLabels(labelIndexer.labels)
+
+/*PIELINE CRATE*/
+val pipeline = new Pipeline().setStages(Array(labelIndexer, featureIndexer, dt, labelConverter))
+
+/*Create a model de training*/
+val model = pipeline.fit(trainingData)
