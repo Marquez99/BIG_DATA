@@ -63,6 +63,12 @@ val lnsvc_accuracy = evaluator.evaluate(lnsvc_prediction)
 print("Accuracy of SVM IS = " + (lnsvc_accuracy))
 
 
+
+
+
+
+
+
 /* PART 2 OF PROJECT*/
 
 /* DECISION TREE CODE*/
@@ -143,4 +149,12 @@ val predictions = model.transform(testData)
 val evaluator = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction").setMetricName("accuracy")
 val accuracy = evaluator.evaluate(predictions)
 println(s"DECISION TREE ACCURACY IS = ${accuracy}")
+
+
+
+
+
+/* PART 3 OF FINAL PROJECT*/
+
+/* LOGISTIC REGRESION */
 
