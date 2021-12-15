@@ -132,3 +132,15 @@ val pipeline = new Pipeline().setStages(Array(labelIndexer, featureIndexer, dt, 
 
 /*Create a model de training*/
 val model = pipeline.fit(trainingData)
+
+/*MODEL DATA TRANSFORM*/
+val predictions = model.transform(testData)
+
+/*PREDICTIONES*/
+// predictions.select("predictedLabel", "label", "features").show(5)
+
+/*ACCURANCY RESULT*/
+val evaluator = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction").setMetricName("accuracy")
+val accuracy = evaluator.evaluate(predictions)
+println(s"DECISION TREE ACCURACY IS = ${accuracy}")
+
