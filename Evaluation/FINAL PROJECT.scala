@@ -272,7 +272,6 @@ val newDF = assembler.transform(newcolumn)
 
 // // We show the features field
 // newDF.show(1)
-
 // We modify the field "y" by label
 val cambio = newDF.withColumnRenamed("y", "label")
 // We select a new df with the fields of 'label' and 'features'
